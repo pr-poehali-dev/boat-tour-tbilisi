@@ -4,7 +4,7 @@ import Icon from "@/components/ui/icon";
 const IMAGES = {
   boat: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/bucket/9ccd4919-2a63-4ff5-b256-566eb4217655.jpeg",
   tbilisi: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/files/c8451a92-435d-4d1d-aa55-dfc9238d98f4.jpg",
-  tourists: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/files/8cd693cb-52fd-4ac5-bca8-e40515262bde.jpg",
+  tourists: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/bucket/9ae8cc12-925b-4398-888c-5fbf1483e18c.jpeg",
 };
 
 const tours = [
@@ -12,7 +12,7 @@ const tours = [
     id: 1,
     title: "Групповой тур",
     desc: "Присоединяйтесь к другим туристам — весело, доступно и интересно.",
-    duration: "с человека",
+    duration: "30–35 мин · 6 км",
     badge: "Хит",
     icon: "Users",
     color: "from-amber-500 to-orange-600",
@@ -24,7 +24,7 @@ const tours = [
     id: 2,
     title: "Индивидуальный",
     desc: "Вся лодка только для вас и вашей компании — без чужих, в своём темпе.",
-    duration: "аренда лодки",
+    duration: "30–35 мин · 6 км",
     badge: "Популярное",
     icon: "Anchor",
     color: "from-teal-500 to-cyan-600",
