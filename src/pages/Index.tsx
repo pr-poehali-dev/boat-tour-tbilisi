@@ -415,9 +415,9 @@ export default function Index() {
 
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {[
-              { icon: "Phone", title: "Телефон", value: "+995 555 000 000", sub: "Пн-Вс, 9:00–21:00" },
-              { icon: "MapPin", title: "Адрес", value: "Тбилиси, набережная Куры", sub: "Рядом с Мостом мира" },
-              { icon: "Mail", title: "Email", value: "info@kuratour.ge", sub: "Ответим в течение часа" },
+              { icon: "Phone", title: "Телефон", value: "+995 555 90 64 61", sub: "Пн-Вс, 9:00–21:00" },
+              { icon: "Instagram", title: "Instagram", value: "@boat_trip_tbilisi7", sub: "Фото и видео прогулок" },
+              { icon: "Mail", title: "Email", value: "rivertriptbilisi@mail.ru", sub: "Ответим в течение часа" },
             ].map((c) => (
               <div key={c.title} className="glass rounded-3xl p-8 text-center">
                 <div
@@ -437,17 +437,20 @@ export default function Index() {
             <p className="font-body text-blue-300 text-sm mb-5">Мы в социальных сетях</p>
             <div className="flex justify-center gap-4">
               {[
-                { icon: "Instagram", label: "Instagram" },
-                { icon: "Send", label: "Telegram" },
-                { icon: "Phone", label: "WhatsApp" },
+                { icon: "Instagram", label: "Instagram", href: "https://instagram.com/boat_trip_tbilisi7" },
+                { icon: "Phone", label: "WhatsApp", href: "https://wa.me/995555906461" },
+                { icon: "Mail", label: "Email", href: "mailto:rivertriptbilisi@mail.ru" },
               ].map((s) => (
-                <button
+                <a
                   key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="glass px-6 py-3 rounded-2xl text-white text-sm font-body flex items-center gap-2 transition-all duration-200 hover:bg-white/20"
                 >
                   <Icon name={s.icon} size={16} fallback="ExternalLink" />
                   {s.label}
-                </button>
+                </a>
               ))}
             </div>
           </div>
