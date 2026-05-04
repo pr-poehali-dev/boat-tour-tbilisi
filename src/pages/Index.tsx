@@ -2,7 +2,7 @@ import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
 const IMAGES = {
-  boat: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/files/bd54d775-803a-4efa-8da2-bf238b2c3a55.jpg",
+  boat: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/bucket/9ccd4919-2a63-4ff5-b256-566eb4217655.jpeg",
   tbilisi: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/files/c8451a92-435d-4d1d-aa55-dfc9238d98f4.jpg",
   tourists: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/files/8cd693cb-52fd-4ac5-bca8-e40515262bde.jpg",
 };
