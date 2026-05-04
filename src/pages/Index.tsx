@@ -10,33 +10,46 @@ const IMAGES = {
 const tours = [
   {
     id: 1,
-    title: "Вечерняя Кура",
-    desc: "Романтический закат над Тбилиси с борта яхты. Вино, джаз и огни старого города.",
-    duration: "2 часа",
-    price: "150 ₾",
+    title: "Индивидуальный",
+    desc: "Личная экскурсия только для вас — никаких посторонних, только вы и река.",
+    duration: "1 человек",
+    price: "30 ₾",
+    priceLabel: "с человека",
     badge: "Хит",
-    icon: "Sunset",
+    icon: "User",
     color: "from-amber-500 to-orange-600",
+    tariffs: [
+      { label: "1 человек", price: "30 ₾" },
+    ],
   },
   {
     id: 2,
-    title: "Исторический маршрут",
-    desc: "Крепость Нарикала, Метехи, Мост мира — главные достопримечательности с воды.",
-    duration: "3 часа",
-    price: "200 ₾",
+    title: "Небольшая группа",
+    desc: "Идеально для семьи или компании друзей — уютная прогулка по реке Кура.",
+    duration: "до 6 человек",
+    price: "от 200 ₾",
+    priceLabel: "за лодку",
     badge: "Популярное",
-    icon: "Landmark",
+    icon: "Users",
     color: "from-teal-500 to-cyan-600",
+    tariffs: [
+      { label: "до 4 человек", price: "200 ₾" },
+      { label: "5–6 человек", price: "250 ₾" },
+    ],
   },
   {
     id: 3,
-    title: "VIP-круиз",
-    desc: "Приватная аренда катера для компании. Мангал на борту, капитан, безграничные эмоции.",
-    duration: "4 часа",
-    price: "от 800 ₾",
-    badge: "VIP",
+    title: "Большая группа",
+    desc: "Для корпоративов, свиданий и больших компаний — незабываемый опыт на воде.",
+    duration: "от 7 человек",
+    price: "от 300 ₾",
+    priceLabel: "за лодку",
+    badge: "Группа",
     icon: "Crown",
     color: "from-violet-500 to-purple-700",
+    tariffs: [
+      { label: "от 7 человек", price: "300+ ₾" },
+    ],
   },
 ];
 
@@ -230,22 +243,24 @@ export default function Index() {
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="font-body text-gray-600 text-sm leading-relaxed mb-6">{tour.desc}</p>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-body text-xs text-gray-400">Стоимость</div>
-                      <div className="font-display text-2xl font-bold" style={{ color: "var(--teal)" }}>{tour.price}</div>
-                    </div>
-                    <button
-                      onClick={() => {
-                        setForm((f) => ({ ...f, tour: tour.title }));
-                        scrollTo("booking");
-                      }}
-                      className="btn-teal px-5 py-2.5 rounded-xl text-sm font-body"
-                    >
-                      Выбрать
-                    </button>
+                  <p className="font-body text-gray-600 text-sm leading-relaxed mb-5">{tour.desc}</p>
+                  <div className="space-y-2 mb-5">
+                    {tour.tariffs.map((t) => (
+                      <div key={t.label} className="flex items-center justify-between px-3 py-2 rounded-xl" style={{ background: "var(--sand)" }}>
+                        <span className="font-body text-sm text-gray-500">{t.label}</span>
+                        <span className="font-display text-lg font-bold" style={{ color: "var(--teal)" }}>{t.price}</span>
+                      </div>
+                    ))}
                   </div>
+                  <button
+                    onClick={() => {
+                      setForm((f) => ({ ...f, tour: tour.title }));
+                      scrollTo("booking");
+                    }}
+                    className="btn-teal w-full py-2.5 rounded-xl text-sm font-body"
+                  >
+                    Забронировать
+                  </button>
                 </div>
               </div>
             ))}
