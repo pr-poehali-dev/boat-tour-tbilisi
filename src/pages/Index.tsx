@@ -251,6 +251,34 @@ export default function Index() {
         </div>
       </section>
 
+      {/* LOCATION */}
+      <section className="py-16 px-4" style={{ background: "var(--sand)" }}>
+        <div className="max-w-3xl mx-auto text-center">
+          <a
+            href="https://maps.google.com/?q=Europe+Square+Tbilisi"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-col items-center gap-3 group"
+          >
+            <div
+              className="w-16 h-16 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-lg"
+              style={{ background: "var(--teal)" }}
+            >
+              <Icon name="MapPin" size={28} className="text-white" />
+            </div>
+            <div>
+              <div className="font-display text-xl font-bold" style={{ color: "var(--navy)" }}>
+                Площадь Европы, Тбилиси
+              </div>
+              <div className="font-body text-sm mt-1 flex items-center justify-center gap-1" style={{ color: "var(--teal)" }}>
+                <Icon name="ExternalLink" size={13} />
+                Открыть на карте
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
       {/* GALLERY */}
       <section id="gallery" className="py-24 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
