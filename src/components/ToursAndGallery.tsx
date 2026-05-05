@@ -1,4 +1,5 @@
 import Icon from "@/components/ui/icon";
+import { Lang, t } from "@/i18n";
 
 const IMAGES = {
   boat: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/bucket/9ccd4919-2a63-4ff5-b256-566eb4217655.jpeg",
@@ -6,102 +7,103 @@ const IMAGES = {
   tourists: "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/bucket/9ae8cc12-925b-4398-888c-5fbf1483e18c.jpeg",
 };
 
-export const tours = [
+export const toursData = [
   {
     id: 1,
-    title: "Групповой тур",
-    desc: "Присоединяйтесь к другим туристам — весело, доступно и интересно.",
-    duration: "30–35 мин · 6 км",
-    badge: "Хит",
+    key: "group" as const,
     icon: "Users",
     color: "from-amber-500 to-orange-600",
-    tariffs: [
-      { label: "1 человек", price: "30 ₾" },
-    ],
+    badgeKey: "hit" as const,
+    duration: "30–35 мин · 6 км",
+    tariffKeys: ["tariff1"] as const,
+    tariffs: [{ price: "30 ₾" }],
   },
   {
     id: 2,
-    title: "Индивидуальный",
-    desc: "Вся лодка только для вас и вашей компании — без чужих, в своём темпе.",
-    duration: "30–35 мин · 6 км",
-    badge: "Популярное",
+    key: "individual" as const,
     icon: "Anchor",
     color: "from-teal-500 to-cyan-600",
-    tariffs: [
-      { label: "до 4 человек", price: "200 ₾" },
-      { label: "5–6 человек", price: "250 ₾" },
-      { label: "от 7 человек", price: "300+ ₾" },
-    ],
+    badgeKey: "popular" as const,
+    duration: "30–35 мин · 6 км",
+    tariffKeys: ["tariff2", "tariff3", "tariff4"] as const,
+    tariffs: [{ price: "200 ₾" }, { price: "250 ₾" }, { price: "300+ ₾" }],
   },
-];
-
-const gallery = [
-  { src: IMAGES.boat, label: "Наш флот" },
-  { src: IMAGES.tbilisi, label: "Тбилиси с воды" },
-  { src: IMAGES.tourists, label: "Наши гости" },
 ];
 
 interface ToursAndGalleryProps {
   scrollTo: (id: string) => void;
   setForm: React.Dispatch<React.SetStateAction<{ name: string; phone: string; date: string; tour: string; guests: string }>>;
+  lang: Lang;
 }
 
-export default function ToursAndGallery({ scrollTo, setForm }: ToursAndGalleryProps) {
+export default function ToursAndGallery({ scrollTo, setForm, lang }: ToursAndGalleryProps) {
+  const tr = t[lang];
+  const isRtl = lang === "ar";
+
+  const gallery = [
+    { src: IMAGES.boat, label: tr.gallery.label1 },
+    { src: IMAGES.tbilisi, label: tr.gallery.label2 },
+    { src: IMAGES.tourists, label: tr.gallery.label3 },
+  ];
+
   return (
     <>
       {/* TOURS */}
-      <section id="tours" className="py-24 px-4" style={{ background: "var(--sand)" }}>
+      <section id="tours" className="py-24 px-4" style={{ background: "var(--sand)" }} dir={isRtl ? "rtl" : "ltr"}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <span className="font-body text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--teal)" }}>
-              Наши маршруты
+              {tr.tours.subtitle}
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold mt-3" style={{ color: "var(--navy)" }}>
-              Экскурсии по Куре
+              {tr.tours.title}
             </h2>
             <p className="font-body text-gray-500 mt-4 max-w-xl mx-auto">
-              Каждый маршрут — особая история Тбилиси, рассказанная с воды
+              {tr.tours.desc}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {tours.map((tour) => (
-              <div key={tour.id} className="bg-white rounded-3xl overflow-hidden card-hover shadow-sm">
-                <div className={`bg-gradient-to-br ${tour.color} p-8 relative`}>
-                  <span className="absolute top-4 right-4 bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full font-body">
-                    {tour.badge}
-                  </span>
-                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
-                    <Icon name={tour.icon} size={28} className="text-white" fallback="Ship" />
+            {toursData.map((tour) => {
+              const info = tr.tours[tour.key];
+              return (
+                <div key={tour.id} className="bg-white rounded-3xl overflow-hidden card-hover shadow-sm">
+                  <div className={`bg-gradient-to-br ${tour.color} p-8 relative`}>
+                    <span className="absolute top-4 right-4 bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full font-body">
+                      {tr.tours[tour.badgeKey]}
+                    </span>
+                    <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
+                      <Icon name={tour.icon} size={28} className="text-white" fallback="Ship" />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold text-white">{info.title}</h3>
+                    <div className="flex items-center gap-1 mt-2 text-white/80 text-sm font-body">
+                      <Icon name="Clock" size={14} />
+                      {tour.duration}
+                    </div>
                   </div>
-                  <h3 className="font-display text-2xl font-bold text-white">{tour.title}</h3>
-                  <div className="flex items-center gap-1 mt-2 text-white/80 text-sm font-body">
-                    <Icon name="Clock" size={14} />
-                    {tour.duration}
+                  <div className="p-6">
+                    <p className="font-body text-gray-600 text-sm leading-relaxed mb-5">{info.desc}</p>
+                    <div className="space-y-2 mb-5">
+                      {tour.tariffs.map((tariff, i) => (
+                        <div key={i} className="flex items-center justify-between px-3 py-2 rounded-xl" style={{ background: "var(--sand)" }}>
+                          <span className="font-body text-sm text-gray-500">{tr.tours[tour.tariffKeys[i]]}</span>
+                          <span className="font-display text-lg font-bold" style={{ color: "var(--teal)" }}>{tariff.price}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => {
+                        setForm((f) => ({ ...f, tour: info.title }));
+                        scrollTo("booking");
+                      }}
+                      className="btn-teal w-full py-2.5 rounded-xl text-sm font-body"
+                    >
+                      {tr.tours.btnBook}
+                    </button>
                   </div>
                 </div>
-                <div className="p-6">
-                  <p className="font-body text-gray-600 text-sm leading-relaxed mb-5">{tour.desc}</p>
-                  <div className="space-y-2 mb-5">
-                    {tour.tariffs.map((t) => (
-                      <div key={t.label} className="flex items-center justify-between px-3 py-2 rounded-xl" style={{ background: "var(--sand)" }}>
-                        <span className="font-body text-sm text-gray-500">{t.label}</span>
-                        <span className="font-display text-lg font-bold" style={{ color: "var(--teal)" }}>{t.price}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => {
-                      setForm((f) => ({ ...f, tour: tour.title }));
-                      scrollTo("booking");
-                    }}
-                    className="btn-teal w-full py-2.5 rounded-xl text-sm font-body"
-                  >
-                    Забронировать
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -123,11 +125,11 @@ export default function ToursAndGallery({ scrollTo, setForm }: ToursAndGalleryPr
             </div>
             <div>
               <div className="font-display text-xl font-bold" style={{ color: "var(--navy)" }}>
-                Площадь Европы, Тбилиси
+                {tr.location.name}
               </div>
               <div className="font-body text-sm mt-1 flex items-center justify-center gap-1" style={{ color: "var(--teal)" }}>
                 <Icon name="ExternalLink" size={13} />
-                Открыть на карте
+                {tr.location.open}
               </div>
             </div>
           </a>
@@ -135,14 +137,14 @@ export default function ToursAndGallery({ scrollTo, setForm }: ToursAndGalleryPr
       </section>
 
       {/* GALLERY */}
-      <section id="gallery" className="py-24 px-4 bg-white">
+      <section id="gallery" className="py-24 px-4 bg-white" dir={isRtl ? "rtl" : "ltr"}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <span className="font-body text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--teal)" }}>
-              Галерея
+              {tr.gallery.subtitle}
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold mt-3" style={{ color: "var(--navy)" }}>
-              Катера и достопримечательности
+              {tr.gallery.title}
             </h2>
           </div>
 
@@ -172,8 +174,8 @@ export default function ToursAndGallery({ scrollTo, setForm }: ToursAndGalleryPr
                 <Icon name="Play" size={24} className="text-white ml-1" />
               </div>
               <div className="text-white">
-                <div className="font-display text-2xl font-semibold">Видео-тур по Куре</div>
-                <div className="font-body text-blue-200 text-sm mt-1">Посмотрите, как проходят наши экскурсии</div>
+                <div className="font-display text-2xl font-semibold">{tr.gallery.videoTitle}</div>
+                <div className="font-body text-blue-200 text-sm mt-1">{tr.gallery.videoDesc}</div>
               </div>
             </div>
           </div>

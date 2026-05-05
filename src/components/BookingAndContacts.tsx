@@ -1,27 +1,32 @@
 import Icon from "@/components/ui/icon";
-import { tours } from "@/components/ToursAndGallery";
+import { toursData } from "@/components/ToursAndGallery";
+import { Lang, t } from "@/i18n";
 
 interface BookingAndContactsProps {
   form: { name: string; phone: string; date: string; tour: string; guests: string };
   setForm: React.Dispatch<React.SetStateAction<{ name: string; phone: string; date: string; tour: string; guests: string }>>;
   sent: boolean;
   handleSubmit: (e: React.FormEvent) => void;
+  lang: Lang;
 }
 
-export default function BookingAndContacts({ form, setForm, sent, handleSubmit }: BookingAndContactsProps) {
+export default function BookingAndContacts({ form, setForm, sent, handleSubmit, lang }: BookingAndContactsProps) {
+  const tr = t[lang];
+  const isRtl = lang === "ar";
+
   return (
     <>
       {/* BOOKING */}
-      <section id="booking" className="py-24 px-4" style={{ background: "var(--sand)" }}>
+      <section id="booking" className="py-24 px-4" style={{ background: "var(--sand)" }} dir={isRtl ? "rtl" : "ltr"}>
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <span className="font-body text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--teal)" }}>
-              Онлайн-бронирование
+              {tr.booking.subtitle}
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold mt-3" style={{ color: "var(--navy)" }}>
-              Забронировать место
+              {tr.booking.title}
             </h2>
-            <p className="font-body text-gray-500 mt-4">Оставьте заявку — мы свяжемся в течение 15 минут</p>
+            <p className="font-body text-gray-500 mt-4">{tr.booking.hint}</p>
           </div>
 
           {sent ? (
@@ -30,18 +35,18 @@ export default function BookingAndContacts({ form, setForm, sent, handleSubmit }
               style={{ background: "linear-gradient(135deg, var(--teal), var(--teal-light))" }}
             >
               <div className="text-5xl mb-4">🎉</div>
-              <h3 className="font-display text-3xl font-bold text-white mb-2">Заявка принята!</h3>
-              <p className="font-body text-teal-100">Мы свяжемся с вами в ближайшее время для подтверждения бронирования.</p>
+              <h3 className="font-display text-3xl font-bold text-white mb-2">{tr.booking.successTitle}</h3>
+              <p className="font-body text-teal-100">{tr.booking.successDesc}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-8 md:p-10 shadow-sm space-y-5">
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
-                  <label className="font-body text-sm font-medium text-gray-600 block mb-2">Ваше имя *</label>
+                  <label className="font-body text-sm font-medium text-gray-600 block mb-2">{tr.booking.name}</label>
                   <input
                     required
                     type="text"
-                    placeholder="Иван Петров"
+                    placeholder={tr.booking.namePlaceholder}
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl border font-body text-sm outline-none transition-all focus:ring-2 focus:ring-teal-400"
@@ -49,11 +54,11 @@ export default function BookingAndContacts({ form, setForm, sent, handleSubmit }
                   />
                 </div>
                 <div>
-                  <label className="font-body text-sm font-medium text-gray-600 block mb-2">Телефон *</label>
+                  <label className="font-body text-sm font-medium text-gray-600 block mb-2">{tr.booking.phone}</label>
                   <input
                     required
                     type="tel"
-                    placeholder="+995 555 000 000"
+                    placeholder={tr.booking.phonePlaceholder}
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl border font-body text-sm outline-none transition-all focus:ring-2 focus:ring-teal-400"
@@ -63,23 +68,23 @@ export default function BookingAndContacts({ form, setForm, sent, handleSubmit }
               </div>
 
               <div>
-                <label className="font-body text-sm font-medium text-gray-600 block mb-2">Экскурсия</label>
+                <label className="font-body text-sm font-medium text-gray-600 block mb-2">{tr.booking.tour}</label>
                 <select
                   value={form.tour}
                   onChange={(e) => setForm({ ...form, tour: e.target.value })}
                   className="w-full px-4 py-3 rounded-xl border font-body text-sm outline-none transition-all bg-white"
                   style={{ borderColor: "var(--border)" }}
                 >
-                  <option value="">Выберите маршрут</option>
-                  {tours.map((t) => (
-                    <option key={t.id} value={t.title}>{t.title}</option>
+                  <option value="">{tr.booking.tourPlaceholder}</option>
+                  {toursData.map((tour) => (
+                    <option key={tour.id} value={tr.tours[tour.key].title}>{tr.tours[tour.key].title}</option>
                   ))}
                 </select>
               </div>
 
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
-                  <label className="font-body text-sm font-medium text-gray-600 block mb-2">Дата</label>
+                  <label className="font-body text-sm font-medium text-gray-600 block mb-2">{tr.booking.date}</label>
                   <input
                     type="date"
                     value={form.date}
@@ -89,7 +94,7 @@ export default function BookingAndContacts({ form, setForm, sent, handleSubmit }
                   />
                 </div>
                 <div>
-                  <label className="font-body text-sm font-medium text-gray-600 block mb-2">Кол-во гостей</label>
+                  <label className="font-body text-sm font-medium text-gray-600 block mb-2">{tr.booking.guests}</label>
                   <input
                     type="number"
                     min="1"
@@ -104,7 +109,7 @@ export default function BookingAndContacts({ form, setForm, sent, handleSubmit }
               </div>
 
               <button type="submit" className="btn-gold w-full py-4 rounded-2xl text-base font-body">
-                Отправить заявку
+                {tr.booking.submit}
               </button>
             </form>
           )}
@@ -116,22 +121,23 @@ export default function BookingAndContacts({ form, setForm, sent, handleSubmit }
         id="contacts"
         className="py-24 px-4"
         style={{ background: `linear-gradient(160deg, var(--navy) 0%, var(--teal-dark) 100%)` }}
+        dir={isRtl ? "rtl" : "ltr"}
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <span className="font-body text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--gold-light)" }}>
-              Контакты
+              {tr.contacts.subtitle}
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold mt-3 text-white">
-              Свяжитесь с нами
+              {tr.contacts.title}
             </h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {[
-              { icon: "Phone", title: "Телефон", value: "+995 555 90 64 61", sub: "Пн-Вс, 9:00–21:00" },
-              { icon: "Instagram", title: "Instagram", value: "@boat_trip_tbilisi7", sub: "Фото и видео прогулок" },
-              { icon: "Mail", title: "Email", value: "rivertriptbilisi@mail.ru", sub: "Ответим в течение часа" },
+              { icon: "Phone", title: "Телефон", value: "+995 555 90 64 61", sub: tr.contacts.phoneSub },
+              { icon: "Instagram", title: "Instagram", value: "@boat_trip_tbilisi7", sub: tr.contacts.instaSub },
+              { icon: "Mail", title: "Email", value: "rivertriptbilisi@mail.ru", sub: tr.contacts.emailSub },
             ].map((c) => (
               <div key={c.title} className="glass rounded-3xl p-8 text-center">
                 <div
@@ -148,7 +154,7 @@ export default function BookingAndContacts({ form, setForm, sent, handleSubmit }
           </div>
 
           <div className="text-center">
-            <p className="font-body text-blue-300 text-sm mb-5">Мы в социальных сетях</p>
+            <p className="font-body text-blue-300 text-sm mb-5">{tr.contacts.social}</p>
             <div className="flex justify-center gap-4">
               {[
                 { icon: "Instagram", label: "Instagram", href: "https://instagram.com/boat_trip_tbilisi7" },
@@ -176,7 +182,7 @@ export default function BookingAndContacts({ form, setForm, sent, handleSubmit }
         className="py-6 px-4 text-center font-body text-sm"
         style={{ background: "var(--navy)", color: "rgba(255,255,255,0.4)" }}
       >
-        © 2024 КураТур — Речные экскурсии по Куре, Тбилиси
+        {tr.footer}
       </footer>
     </>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Lang } from "@/i18n";
 import NavBar from "@/components/NavBar";
 import HeroSection from "@/components/HeroSection";
 import ToursAndGallery from "@/components/ToursAndGallery";
@@ -9,6 +10,7 @@ export default function Index() {
   const [form, setForm] = useState({ name: "", phone: "", date: "", tour: "", guests: "" });
   const [sent, setSent] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [lang, setLang] = useState<Lang>("ru");
 
   const scrollTo = (id: string) => {
     setActiveSection(id);
@@ -35,14 +37,17 @@ export default function Index() {
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
         scrollTo={scrollTo}
+        lang={lang}
+        setLang={setLang}
       />
-      <HeroSection scrollTo={scrollTo} />
-      <ToursAndGallery scrollTo={scrollTo} setForm={setForm} />
+      <HeroSection scrollTo={scrollTo} lang={lang} />
+      <ToursAndGallery scrollTo={scrollTo} setForm={setForm} lang={lang} />
       <BookingAndContacts
         form={form}
         setForm={setForm}
         sent={sent}
         handleSubmit={handleSubmit}
+        lang={lang}
       />
     </div>
   );

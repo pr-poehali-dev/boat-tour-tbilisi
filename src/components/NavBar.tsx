@@ -1,21 +1,27 @@
 import Icon from "@/components/ui/icon";
-
-const navItems = [
-  { id: "home", label: "Главная" },
-  { id: "tours", label: "Экскурсии" },
-  { id: "gallery", label: "Галерея" },
-  { id: "booking", label: "Бронирование" },
-  { id: "contacts", label: "Контакты" },
-];
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { Lang, t } from "@/i18n";
 
 interface NavBarProps {
   activeSection: string;
   menuOpen: boolean;
   setMenuOpen: (v: boolean) => void;
   scrollTo: (id: string) => void;
+  lang: Lang;
+  setLang: (l: Lang) => void;
 }
 
-export default function NavBar({ activeSection, menuOpen, setMenuOpen, scrollTo }: NavBarProps) {
+export default function NavBar({ activeSection, menuOpen, setMenuOpen, scrollTo, lang, setLang }: NavBarProps) {
+  const tr = t[lang].nav;
+
+  const navItems = [
+    { id: "home", label: tr.home },
+    { id: "tours", label: tr.tours },
+    { id: "gallery", label: tr.gallery },
+    { id: "booking", label: tr.booking },
+    { id: "contacts", label: tr.contacts },
+  ];
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/20">
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
@@ -44,16 +50,18 @@ export default function NavBar({ activeSection, menuOpen, setMenuOpen, scrollTo 
           ))}
         </div>
 
-        <button
-          onClick={() => scrollTo("booking")}
-          className="hidden md:block btn-gold px-5 py-2 rounded-xl text-sm font-body"
-        >
-          Забронировать
-        </button>
-
-        <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
-          <Icon name={menuOpen ? "X" : "Menu"} size={22} style={{ color: "var(--navy)" }} />
-        </button>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher lang={lang} setLang={setLang} />
+          <button
+            onClick={() => scrollTo("booking")}
+            className="hidden md:block btn-gold px-5 py-2 rounded-xl text-sm font-body"
+          >
+            {tr.book}
+          </button>
+          <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
+            <Icon name={menuOpen ? "X" : "Menu"} size={22} style={{ color: "var(--navy)" }} />
+          </button>
+        </div>
       </div>
 
       {menuOpen && (

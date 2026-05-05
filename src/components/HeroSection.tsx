@@ -1,17 +1,23 @@
 import Icon from "@/components/ui/icon";
+import { Lang, t } from "@/i18n";
 
 const TBILISI_IMG = "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/files/c8451a92-435d-4d1d-aa55-dfc9238d98f4.jpg";
 
 interface HeroSectionProps {
   scrollTo: (id: string) => void;
+  lang: Lang;
 }
 
-export default function HeroSection({ scrollTo }: HeroSectionProps) {
+export default function HeroSection({ scrollTo, lang }: HeroSectionProps) {
+  const tr = t[lang].hero;
+  const isRtl = lang === "ar";
+
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ background: `linear-gradient(160deg, var(--navy) 0%, #0a4a5c 50%, var(--teal-dark) 100%)` }}
+      dir={isRtl ? "rtl" : "ltr"}
     >
       <div
         className="absolute inset-0 opacity-30"
@@ -39,33 +45,33 @@ export default function HeroSection({ scrollTo }: HeroSectionProps) {
           style={{ background: "rgba(212,160,49,0.15)", color: "var(--gold-light)", border: "1px solid rgba(212,160,49,0.3)" }}
         >
           <Icon name="MapPin" size={14} />
-          Тбилиси, река Кура
+          {tr.badge}
         </div>
 
         <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight mb-6 animate-fade-up-delay-1">
-          Открой Тбилиси<br />
-          <span className="shimmer-text italic">с воды</span>
+          {tr.title1}<br />
+          <span className="shimmer-text italic">{tr.title2}</span>
         </h1>
 
         <p className="font-body text-lg md:text-xl text-blue-100 max-w-2xl mx-auto mb-10 animate-fade-up-delay-2 leading-relaxed">
-          Речные экскурсии по Куре — катера, закаты и незабываемые виды<br className="hidden md:block" /> на исторический Тбилиси
+          {tr.desc}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up-delay-3">
           <button onClick={() => scrollTo("booking")} className="btn-gold px-8 py-4 rounded-2xl text-base font-body">
-            Забронировать экскурсию
+            {tr.btnBook}
           </button>
           <button
             onClick={() => scrollTo("tours")}
             className="px-8 py-4 rounded-2xl text-base font-body font-semibold text-white transition-all duration-200"
             style={{ border: "1.5px solid rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.08)" }}
           >
-            Наши маршруты
+            {tr.btnTours}
           </button>
         </div>
 
         <div className="flex justify-center gap-10 mt-16 animate-fade-in">
-          {[["500+", "Довольных гостей"], ["3", "Маршрута"], ["5★", "Оценка сервиса"]].map(([num, label]) => (
+          {[["500+", tr.stat1], ["3", tr.stat2], ["5★", tr.stat3]].map(([num, label]) => (
             <div key={label} className="text-center">
               <div className="font-display text-3xl font-bold" style={{ color: "var(--gold-light)" }}>{num}</div>
               <div className="font-body text-xs text-blue-200 mt-1">{label}</div>
