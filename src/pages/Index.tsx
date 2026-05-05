@@ -54,8 +54,15 @@ export default function Index() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      await fetch("https://functions.poehali.dev/803a9bf8-2f08-4c6b-8337-10e1bfd4a804", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+    } catch (err) { console.error(err); }
     setSent(true);
   };
 
