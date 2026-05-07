@@ -1,6 +1,16 @@
 import Icon from "@/components/ui/icon";
 import { Lang } from "@/i18n";
 
+const MTSKHETA_1 = "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/bucket/fabc3d6c-f21b-4e71-88e9-bb60c84b3328.jpeg";
+const ANANURI_1 = "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/bucket/93400a42-2b06-451e-b8f4-28cf0dae60da.jpeg";
+
+const galleryPhotos = [
+  { src: MTSKHETA_1, place: "mtskheta" },
+  { src: MTSKHETA_1, place: "mtskheta" },
+  { src: ANANURI_1, place: "ananuri" },
+  { src: ANANURI_1, place: "ananuri" },
+];
+
 const countryTours = [
   {
     icon: "Mountain",
@@ -123,7 +133,14 @@ export default function CountryToursPage({ scrollTo, lang }: CountryToursPagePro
 
   const lb = labels[lang];
 
-  const heroImg = "https://cdn.poehali.dev/projects/051da4b6-d5da-4be2-a654-6faca8ae6469/bucket/c75cc378-f39e-4cd9-8542-4eb40472b1d7.jpeg";
+  const heroImg = MTSKHETA_1;
+
+  const galleryLabels: Record<Lang, { mtskheta: string[]; ananuri: string[] }> = {
+    ru: { mtskheta: ["Мцхета — древняя столица", "Монастырь Джвари"], ananuri: ["Крепость Ананури", "Ананури у водохранилища"] },
+    en: { mtskheta: ["Mtskheta — Ancient Capital", "Jvari Monastery"], ananuri: ["Ananuri Fortress", "Ananuri at the Reservoir"] },
+    ka: { mtskheta: ["მცხეთა — ძველი დედაქალაქი", "ჯვრის მონასტერი"], ananuri: ["ანანურის ციხე", "ანანური წყალსაცავთან"] },
+    ar: { mtskheta: ["متسخيتا — العاصمة القديمة", "دير جفاري"], ananuri: ["قلعة أنانوري", "أنانوري عند الخزان"] },
+  };
 
   return (
     <div dir={isRtl ? "rtl" : "ltr"}>
@@ -223,6 +240,41 @@ export default function CountryToursPage({ scrollTo, lang }: CountryToursPagePro
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* GALLERY */}
+          <div className="mt-20">
+            <div className="text-center mb-10">
+              <span className="font-body text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--teal)" }}>
+                {lb.photoTitle}
+              </span>
+              <h3 className="font-display text-3xl font-bold mt-2" style={{ color: "var(--navy)" }}>
+                Мцхета &amp; Ананури
+              </h3>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {galleryPhotos.map((photo, i) => {
+                const gl = galleryLabels[lang];
+                const label = photo.place === "mtskheta" ? gl.mtskheta[i % 2] : gl.ananuri[i % 2];
+                return (
+                  <div key={i} className="relative rounded-2xl overflow-hidden aspect-[3/4] card-hover group cursor-pointer shadow-md">
+                    <img
+                      src={photo.src}
+                      alt={label}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
+                    <div className="absolute bottom-3 left-3 right-3 text-white font-body text-sm font-semibold leading-tight">{label}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <button onClick={() => scrollTo("booking")} className="btn-gold px-10 py-4 rounded-2xl text-base font-body">
+              {lb.btnBook}
+            </button>
           </div>
         </div>
       </section>
