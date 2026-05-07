@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Lang } from "@/i18n";
-import NavBar from "@/components/NavBar";
+import NavBar, { SiteTab } from "@/components/NavBar";
 import HeroSection from "@/components/HeroSection";
 import ToursAndGallery from "@/components/ToursAndGallery";
 import BookingAndContacts from "@/components/BookingAndContacts";
+import CityTourPage from "@/components/CityTourPage";
+import CountryToursPage from "@/components/CountryToursPage";
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState("home");
@@ -11,6 +13,7 @@ export default function Index() {
   const [sent, setSent] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [lang, setLang] = useState<Lang>("ru");
+  const [activeTab, setActiveTab] = useState<SiteTab>("river");
 
   const scrollTo = (id: string) => {
     setActiveSection(id);
@@ -39,16 +42,51 @@ export default function Index() {
         scrollTo={scrollTo}
         lang={lang}
         setLang={setLang}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
-      <HeroSection scrollTo={scrollTo} lang={lang} />
-      <ToursAndGallery scrollTo={scrollTo} setForm={setForm} lang={lang} />
-      <BookingAndContacts
-        form={form}
-        setForm={setForm}
-        sent={sent}
-        handleSubmit={handleSubmit}
-        lang={lang}
-      />
+
+      <div className="pt-[96px]">
+        {activeTab === "river" && (
+          <>
+            <HeroSection scrollTo={scrollTo} lang={lang} />
+            <ToursAndGallery scrollTo={scrollTo} setForm={setForm} lang={lang} />
+            <BookingAndContacts
+              form={form}
+              setForm={setForm}
+              sent={sent}
+              handleSubmit={handleSubmit}
+              lang={lang}
+            />
+          </>
+        )}
+
+        {activeTab === "city" && (
+          <>
+            <CityTourPage scrollTo={scrollTo} lang={lang} />
+            <BookingAndContacts
+              form={form}
+              setForm={setForm}
+              sent={sent}
+              handleSubmit={handleSubmit}
+              lang={lang}
+            />
+          </>
+        )}
+
+        {activeTab === "country" && (
+          <>
+            <CountryToursPage scrollTo={scrollTo} lang={lang} />
+            <BookingAndContacts
+              form={form}
+              setForm={setForm}
+              sent={sent}
+              handleSubmit={handleSubmit}
+              lang={lang}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }
